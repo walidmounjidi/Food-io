@@ -4,15 +4,17 @@ import "../App.css"
 export default function Home() {
   return (
     <div>
-        <section className='home'>
-            <div className='left'>
-                <h1>Lorem ipsum dolor sit.</h1>
-                <p>
+        <section className='flex justify-between p-5'>
+            <div className='left '>
+                <h1 className='text-[40px] font-bold mt-[15px] text-[#ff9560]'>Lorem ipsum dolor sit.</h1>
+                <p className='text-[#878787] text-[22px]'>
                    Lorem ipsum dolor sit amet, consectetur 
                    adipisicing elit. Culpa sed maiores asperiores quam. 
                    Odit, doloremque.
                 </p>
-                <button>Lorem, ipsum dolor.</button>
+                <button 
+                className='bg-[#ff9560] mt-1 text-[18px] text-white transition-all duration-300 border-none outline-none
+                hover:bg-[#cf4303] p-1 rounded-[10px]'>Lorem, ipsum dolor.</button>
             </div>
             <div className='right'>
                 <img src={MoroccanTajine} alt="" width="350px" height="350px"/>
