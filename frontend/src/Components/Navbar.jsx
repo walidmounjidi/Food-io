@@ -25,7 +25,7 @@ export default function Navbar() {
           {links.map((item, index) => (
             <li 
               key={index} 
-              className='text-[16px] md:text-[20px] p-[10px] md:p-[15px] transition-all duration-300 hover:bg-[#ff9560] rounded-[7px]'
+              className='text-[16px] md:text-[20px] p-1 md:p-[15px] transition-all duration-300 hover:bg-[#ff9560] rounded-[7px]'
             >
               <a 
                 href={item.path} 

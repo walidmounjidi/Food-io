@@ -4,7 +4,8 @@ const dotenv = require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 const connectDB = require('./config/connectionDb');
 app.use(express.json());
-
+const cors = require('cors');
+app.use(cors());
 app.use('/recipe',require('./Router/recipe'))
 
 
