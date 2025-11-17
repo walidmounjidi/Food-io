@@ -11,7 +11,6 @@ export default function Home() {
                 <p className='text-[#878787] text-[18px] md:text-[22px] w-[100%] md:w-[80%] mt-3'>
                    Lorem ipsum dolor sit amet, consectetur 
                    adipisicing elit. Culpa sed maiores asperiores quam. 
-                   Odit, doloremque.
                 </p>
                 <button 
                 className='bg-[#ff9560] mt-3 text-[16px] md:text-[18px] 
