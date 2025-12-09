@@ -1,6 +1,7 @@
 const Recipe = require('../models/RecipeSchema');
-
+const verifyToken = require('../Middleware/auth')
 const addRecipe = async(req,res)=>{
+    console.log(req.user)
     try {
         const {title , ingredients , instructions} = req.body;
         if(!title || !ingredients || !instructions){
@@ -11,7 +12,8 @@ const addRecipe = async(req,res)=>{
             title,
             ingredients: typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients,
             instructions,
-            coverImage: req.file ? req.file.filename : null
+            coverImage: req.file ? req.file.filename : null,
+            createdBy:req.user.id
         })
 
         return res.json(newRecipe);
@@ -63,7 +65,8 @@ const editRecipe = async(req, res) => {
             { 
                 title,
                 ingredients: typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients,
-                instructions
+                instructions,
+                coverImage: req.file ? req.file.filename : null,
             },
             { new: true }
         );

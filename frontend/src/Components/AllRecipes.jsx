@@ -38,7 +38,8 @@ export default function AllRecipes() {
   return (
     <div
     className='p-[2rem] bg-[#fff3e6] min-h-[100vh]'>
-      <h1>
+      <h1
+      className='text-2xl font-bold text-[#ff5601] pb-1'>
         All Recipes
       </h1>
 

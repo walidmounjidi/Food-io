@@ -2,6 +2,7 @@ const express = require('express');
 const Router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const verifyToken = require('../Middleware/auth')
 const { addRecipe, getRecipes, getRecipe, deleteRecipe, editRecipe } = require('../controller/recipe');
 
 // إعداد Multer
@@ -17,10 +18,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Routes
-Router.post('/', upload.single('coverImage'), addRecipe);
+Router.post('/', upload.single('coverImage'), verifyToken,addRecipe);
 Router.get('/', getRecipes);
 Router.get('/:id', getRecipe);
 Router.delete('/:id', deleteRecipe);
-Router.put('/:id', editRecipe);
+Router.put('/:id',upload.single('coverImage'), editRecipe);
 
 module.exports = Router;

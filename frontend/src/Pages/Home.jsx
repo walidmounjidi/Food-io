@@ -1,10 +1,23 @@
-import React from 'react'
+import React ,{ useState } from 'react'
 import MoroccanTajine from '../assets/MoroccanTajine.png'
 import AllRecipes from '../Components/AllRecipes'
+import InputFrom from '../Components/InputFrom'
 import "../App.css"
 import { useNavigate } from 'react-router-dom'
 export default function Home() {
+  const [IsOpenn, SetOpen] = useState(false);
   const navigate = useNavigate();
+  const addRecipies = ()=>{
+    let token = localStorage.getItem('token');
+    if(token){
+      navigate('/addRecipe')
+    }else{
+      SetOpen(true)
+    }
+  }
+  const closeModal = ()=>{
+    SetOpen(false)
+  }
   return (
     <div>
         <section className='flex flex-col md:flex-row justify-between p-5 items-center gap-10'>
@@ -15,10 +28,10 @@ export default function Home() {
                    adipisicing elit. Culpa sed maiores asperiores quam. 
                 </p>
                 <button 
-                onClick={()=>{navigate('/addRecipe')}}
+                onClick={addRecipies}
                 className='bg-[#ff9560] mt-3 text-[16px] md:text-[18px] 
               text-white transition-all duration-300 outline-none
-              hover:bg-[#cf4303] px-4 py-2 rounded-[10px]'>Lorem, ipsum dolor.</button>
+              hover:bg-[#cf4303] px-4 py-2 rounded-[10px]'>Add Recipes</button>
             </div>
             <div className='right flex justify-center'>
                 <img src={MoroccanTajine} alt="" className='w-[250px] h-[250px] md:w-[350px] md:h-[350px]'/>
@@ -30,6 +43,7 @@ export default function Home() {
             480,235,540,218.7C600,203,660,149,720,117.3C780,85,840,75,900,69.3C960,64,1020,64,1080,90.7C1140,117,1200,171,1260,197.3C1320,224,1380,224,1410,224L1440,224L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,
             540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path></svg>
         </div>
+        {IsOpenn && <InputFrom onClose={closeModal} />}
         <AllRecipes></AllRecipes>
     </div>
   )
