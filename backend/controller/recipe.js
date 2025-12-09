@@ -1,42 +1,76 @@
 const Recipe = require('../models/RecipeSchema');
 
 const addRecipe = async(req,res)=>{
-    const {title , ingredients , instructions} = req.body;
-    if(!title || !ingredients || !instructions){
-        res.json({message:"Required fields can't be empty"})
-    }
-    const newRecipe = await Recipe.create({
-        title,ingredients,instructions
-     })
-     return res.json(newRecipe);
-}
-
-const getRecipes = async(req,res)=>{
-    const recipe = await Recipe.find()
-    return res.json(recipe)
-}
-
-const getRecipe = async(req,res)=>{
-    const recipe = await Recipe.findById(req.params.id)
-    res.json(recipe)
-}
-
-const deletRecipe = async(req,res)=>{
-    const recipe = await Recipe.findByIdAndDelete(req.params.id)
-    res.json(recipe)
-}
-
-const editRecipe = async (req,res)=>{
-    const {title,ingredients,instructions} = req.body;
-    let recipe = await Recipe.findById(req.params.id);
-    try{
-        if(recipe){
-        await Recipe.findByIdAndUpdate(req.params.id,req.body,{new:true})
-        res.json({title,ingredients,instructions})
+    try {
+        const {title , ingredients , instructions} = req.body;
+        if(!title || !ingredients || !instructions){
+            return res.status(400).json({message:"Required fields can't be empty"})
         }
-    }
-    catch(err){
-        return res.status(404).json({message:"error"})
+
+        const newRecipe = await Recipe.create({
+            title,
+            ingredients: typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients,
+            instructions,
+            coverImage: req.file ? req.file.filename : null
+        })
+
+        return res.json(newRecipe);
+    } catch(err) {
+        console.log(err)   // هنا تشوف الخطأ بالتفصيل
+        return res.status(500).json({message: err.message})
     }
 }
-module.exports = {addRecipe , getRecipes , getRecipe , deletRecipe , editRecipe}
+
+// جلب جميع الوصفات
+const getRecipes = async(req, res) => {
+    try {
+        const recipes = await Recipe.find();
+        res.json(recipes);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// جلب وصفة واحدة
+const getRecipe = async(req, res) => {
+    try {
+        const recipe = await Recipe.findById(req.params.id);
+        res.json(recipe);
+    } catch (error) {
+        res.status(404).json({ message: "Recipe not found" });
+    }
+};
+
+// حذف وصفة
+const deleteRecipe = async(req, res) => {
+    try {
+        const recipe = await Recipe.findByIdAndDelete(req.params.id);
+        res.json(recipe);
+    } catch (error) {
+        res.status(404).json({ message: "Recipe not found" });
+    }
+};
+
+// تعديل وصفة
+const editRecipe = async(req, res) => {
+    try {
+        const { title, ingredients, instructions } = req.body;
+        const recipe = await Recipe.findById(req.params.id);
+        if (!recipe) return res.status(404).json({ message: "Recipe not found" });
+
+        const updatedRecipe = await Recipe.findByIdAndUpdate(
+            req.params.id,
+            { 
+                title,
+                ingredients: typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients,
+                instructions
+            },
+            { new: true }
+        );
+        res.json(updatedRecipe);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { addRecipe, getRecipes, getRecipe, deleteRecipe, editRecipe };

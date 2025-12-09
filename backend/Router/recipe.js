@@ -1,10 +1,26 @@
 const express = require('express');
 const Router = express.Router();
-const {addRecipe ,getRecipes ,getRecipe ,deletRecipe ,editRecipe} = require('../controller/recipe');
+const multer = require('multer');
+const path = require('path');
+const { addRecipe, getRecipes, getRecipe, deleteRecipe, editRecipe } = require('../controller/recipe');
 
-Router.post('/',addRecipe);
-Router.get('/',getRecipes);
-Router.get('/:id',getRecipe);
-Router.delete('/:id',deletRecipe);
-Router.put('/:id',editRecipe);
+// إعداد Multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './Public/images'); // تأكد أن هذا المجلد موجود
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = Date.now() + '-' + file.originalname;
+        cb(null, uniqueName);
+    }
+});
+const upload = multer({ storage });
+
+// Routes
+Router.post('/', upload.single('coverImage'), addRecipe);
+Router.get('/', getRecipes);
+Router.get('/:id', getRecipe);
+Router.delete('/:id', deleteRecipe);
+Router.put('/:id', editRecipe);
+
 module.exports = Router;

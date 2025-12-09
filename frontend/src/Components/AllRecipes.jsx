@@ -3,8 +3,8 @@ import axios from 'axios';
 import { IoIosHeart } from "react-icons/io";
 export default function AllRecipes() {
   const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true); // حالة التحميل
-  const [error, setError] = useState(null);     // حالة الخطأ
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null);     
 
   useEffect(() => {
     axios.get('http://localhost:5000/recipe')
@@ -43,23 +43,25 @@ export default function AllRecipes() {
       </h1>
 
       <div
-      className='flex flex-wrap gap-[1.5rem] justify-center'>
+      className='grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2  gap-[2rem]'>
         {recipes.map((dat, index) => (
           <div 
             key={index} 
-            className='group bg-[#fff] rounded-[12px] shadow-lg transition-all duration-300 ease-out hover:translate-y-1
-            w-[300px] cursor-pointer hover:bg-[#ff9560] hover:text-white p-2 relative'
+            className='group overflow-y-scroll h-80 bg-[#fff] rounded-[12px] shadow-lg transition-all duration-300 ease-out hover:translate-y-1
+            xl:w-[250px] lg:w-[240px] sm:w-[220px]  cursor-pointer hover:bg-[#ff9560] hover:text-white p-2 relative'
           >
+            <img src={`http://localhost:5000/public/images/${dat?.coverImage}`} alt="" 
+            className='h-50'/>
             <h4
-            className='mb-[0.5rem] text-[#ff6347] group-hover:text-black'>{dat?.title}</h4>
-            <p className='my-[0.2rem]'>
+            className='sm:mb-[0.5rem] text-[#ff6347] group-hover:text-black s'>{dat?.title}</h4>
+            <p className='sm:my-[0.2rem] '>
               {Array.isArray(dat?.ingredients) 
                 ? dat.ingredients.join(", ") 
                 : dat?.ingredients || "No ingredients"}
             </p>
             <small className='my-[0.2rem]'>{dat?.instructions || "No instructions"}</small>
             <div
-            className='absolute top-1 right-1 flex gap-1 text-[24px] text-[#ff9560]'>
+            className='sm:absolute   bottom-1 right-1 flex gap-1 text-[24px] text-[#ff9560]'>
                 <IoIosHeart />
             </div>
           </div>

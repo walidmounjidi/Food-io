@@ -18,7 +18,7 @@ const addUser = async(req,res)=>{
     })
     await newUser.save();
     let token = jwt.sign({email,id:newUser._id},process.env.SECRET_KEY,{expiresIn:'7h'})
-    return res.status(201).json({message:'User registered successfully',token,newUser})
+    return res.status(201).json({message:'User registered successfully',token,user:newUser})
 }
 
 const addUser1 = async(req,res)=>{

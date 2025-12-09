@@ -1,1 +1,19 @@
 @import "tailwindcss";
+/* @media (max-width:768px) {
+    ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #ff9560;
+}
+::-webkit-scrollbar-thumb {
+    background: #cf4303;
+}
+
+} */
+
+    ::-webkit-scrollbar{
+        display: none;
+    }
+

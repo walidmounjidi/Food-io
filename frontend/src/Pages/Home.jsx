@@ -2,7 +2,9 @@ import React from 'react'
 import MoroccanTajine from '../assets/MoroccanTajine.png'
 import AllRecipes from '../Components/AllRecipes'
 import "../App.css"
+import { useNavigate } from 'react-router-dom'
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div>
         <section className='flex flex-col md:flex-row justify-between p-5 items-center gap-10'>
@@ -13,6 +15,7 @@ export default function Home() {
                    adipisicing elit. Culpa sed maiores asperiores quam. 
                 </p>
                 <button 
+                onClick={()=>{navigate('/addRecipe')}}
                 className='bg-[#ff9560] mt-3 text-[16px] md:text-[18px] 
               text-white transition-all duration-300 outline-none
               hover:bg-[#cf4303] px-4 py-2 rounded-[10px]'>Lorem, ipsum dolor.</button>

@@ -7,7 +7,7 @@ app.use(express.json());
 const cors = require('cors');
 app.use(cors());
 app.use('/recipe',require('./Router/recipe'))
-
+app.use('/Public/images', express.static('Public/images'));
 app.use('/User',require('./Router/User'))
 
 app.listen(PORT,()=>{
