@@ -15,7 +15,7 @@ export default function EditRecipe() {
         title: res.title,
         ingredients: res.ingredients.join(","),
         instructions: res.instructions,
-        coverImage: null // file input cannot have value
+        coverImage: null 
       });
     } catch (err) {
       console.error(err);

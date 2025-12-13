@@ -28,7 +28,6 @@ export default function MyRecipes() {
     });
     console.log(resp.data);
 
-    // تحديث الواجهة بدون الحاجة لإعادة تحميل الصفحة
     setmyrecipes(prev => prev.filter(r => r._id !== id));
   } catch (error) {
     console.error(error.response?.data || error.message);
@@ -74,7 +73,7 @@ export default function MyRecipes() {
                 </p>
                 <small className='my-[0.2rem]'>{dat?.instructions || "No instructions"}</small>
                 <div
-                className=' sm:absolute   bottom-1 right-1 flex gap-1 text-[24px] text-[#ff9560]'>
+                className='absolute   top-1 left-1 flex gap-1 text-[24px] text-[#ff9560]'>
                     <IoIosHeart className='text-[#ff9560] group-hover:text-white'/>
                 </div>
               </div>

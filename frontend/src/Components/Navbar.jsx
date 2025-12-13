@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import Logo from '../assets/logo.png'
 import InputFrom from './InputFrom';
+import { IoMenu } from "react-icons/io5";
+import { RiMenu4Line } from "react-icons/ri";
 import { useEffect } from 'react';
 export default function Navbar() {
   const [IsOpenn, SetOpen] = useState(false);
   const [islogin, setIsLogin] = useState(!!localStorage.getItem("token"));
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setIsLogin(!!localStorage.getItem("token"));
@@ -60,126 +63,51 @@ export default function Navbar() {
               {islogin ? "Logout" : "Login"}
             </button>
           </ul>
+          <div className="md:hidden">
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-[#ff5601] text-3xl"
+          >
+            {isMenuOpen ? <RiMenu4Line /> : <IoMenu />}
+          </button>
+          </div>
         </nav>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <ul className="md:hidden flex flex-col bg-white shadow-md p-4 space-y-3 animate-slideDown">
+
+            <li className="p-2 rounded-lg hover:bg-[#ff9560] transition">
+              <a href="/" className="text-[#ff5601] hover:text-white font-medium">Home</a>
+            </li>
+
+            <li className="p-2 rounded-lg hover:bg-[#ff9560] transition" onClick={handalepr}>
+              <a href={islogin ? "/myRecipes" : "/"} className="text-[#ff5601] hover:text-white font-medium">
+                My Recipes
+              </a>
+            </li>
+
+            <li className="p-2 rounded-lg hover:bg-[#ff9560] transition" onClick={handalepr}>
+              <a href={islogin ? "/myFavRecipes" : "/"} className="text-[#ff5601] hover:text-white font-medium">
+                Favorite
+              </a>
+            </li>
+
+            <li className="p-2 rounded-lg hover:bg-[#ff9560] transition">
+              <a href="/contact" className="text-[#ff5601] hover:text-white font-medium">Contact</a>
+            </li>
+
+            <button
+              onClick={chekLogin}
+              className="w-full p-2 rounded-lg bg-[#ff9560] text-[#ff5601] hover:text-white font-medium"
+            >
+              {islogin ? "Logout" : "Login"}
+            </button>
+
+          </ul>
+        )}
       </header>
 
       {IsOpenn && <InputFrom onClose={closeModal} />}
     </>
   );
 }
-
-
-// import React, { useState } from 'react'
-// import Logo from '../assets/logo.png'
-// import { IoMenu } from "react-icons/io5";
-// import { RiMenu4Line } from "react-icons/ri";
-// import InputFrom from './InputFrom';
-
-// export default function Navbar() {
-
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [showForm, setShowForm] = useState(false);
-//   let token = localStorage.getItem('token');
-//   const [islogin,setIsLogin] = useState(token?true :false)
-//   const links = [
-//     {id:0, name: "Home", path: "/" },
-//     {id:1, name: "My Recipes", path: "/MyRecipes" },
-//     {id:2, name: "Favorite", path: "/MyFavRecipes" },
-//     {id:3, name: "Contact", path: "/contact" },
-//     // {id:4, name: "Login", path: "/login" }
-//   ]
-
-//   return (
-//     <>
-//      <header className="bg-white shadow-md relative z-20">
-//        <nav className="flex items-center justify-between sm:p-4 px-4 md:p-[15px]">
- 
-//          {/* Logo */}
-//          <div className='logo'>
-//            <img src={Logo} alt="logo" className='w-[100px] md:w-[120px] h-[100px] md:h-[120px]' />
-//          </div>
- 
-//          {/* Desktop Links */}
-//          <ul className="hidden md:flex list-none gap-3 mr-[25px]">
-//            {links.map((item) => (
-//              <li 
-//                key={item.id} 
-//                className={`${item.id === 4 ? "bg-[#ff9560]" : "hover:bg-[#ff9560]"} 
-//                text-[16px] md:text-[20px] p-2 rounded-[7px]`}
-//              >
-//                <a href={item.path}
-//                  className='text-[#ff5601] font-medium hover:text-white'
-//                >
-//                  {item.name}
-//                </a>
-//              </li>
-//            ))}
-//            <li
-//            className='bg-[#ff9560] text-[16px] md:text-[20px] p-2 rounded-[7px]'>
-//               <button
-//                 className='text-[#ff5601] font-medium hover:text-white'
-//                 onClick={() => { 
-//                   if(islogin){
-//                     localStorage.removeItem('token');
-//                     setIsLogin(false);
-//                   } else {
-//                     setShowForm(true);
-//                   }
-//                 }}
-//               >
-//               {islogin ? "Logout" : "Login"}
-//               </button>
-//            </li>
-//          </ul>
-
-//          <div className="md:hidden">
-//            <button 
-//              onClick={() => setIsOpen(!isOpen)}
-//              className="text-[#ff5601] text-3xl"
-//            >
-//              {isOpen ? <RiMenu4Line /> : <IoMenu />}
-//            </button>
-//          </div>
-//        </nav>
- 
-//        {/* Mobile Menu */}
-//        {isOpen && (
-//          <ul className="flex flex-col md:hidden bg-white shadow-md p-4 gap-2">
-//            {links.map((item) => (
-//              <li 
-//                key={item.id} 
-//                className='text-[16px] p-2 hover:bg-[#ff9560] rounded-[7px]'
-//              >
-//                <button
-//                  onClick={() => {
-//                    if(item.name === "Login") setShowForm(true);
-//                    setIsOpen(false);
-//                  }}
-//                  className='text-[#ff5601] font-medium hover:text-white w-full text-left'
-//                >
-//                  {item.name}
-//                </button>
-//              </li>
-//            ))}
-//          </ul>
-//        )}
-//      </header>
-
-    
-//      {showForm && (
-//        <div 
-//          onClick={() => setShowForm(false)}
-//          className="fixed inset-0 bg-black/10 backdrop-blur-sm flex justify-center items-center z-50"
-//        >
-//          <div 
-//            onClick={(e)=>e.stopPropagation()}
-//            className="animate-fadeIn"
-//          >
-//            <InputFrom />
-//          </div>
-//        </div>
-//      )}
-
-//     </>
-//   )
-// }
